@@ -8,12 +8,17 @@ import HelloWorld from './components/HelloWorld.vue'
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
 
     <div class="wrapper">
-      <HelloWorld msg="You did it!" />
+      <HelloWorld msg="Yess!" />
 
       <nav>
+        <!-- a href: navigation between sfc in views (based on router/index.js) -->
+
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">About</RouterLink>
+          <!-- v-bind: add attribute binding to custom value -->
+          <RouterLink :to="{ name: 'test' }">Test</RouterLink>
       </nav>
+
     </div>
   </header>
 
