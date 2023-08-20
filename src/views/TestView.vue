@@ -1,6 +1,9 @@
 <script setup>
 import { ref } from 'vue'
+
 import { useListStore } from '@/stores/lists'
+// components
+import BaseInput from '@comp/BaseInput.vue'
 
 //store container
 const store = useListStore()
@@ -19,6 +22,9 @@ function onSubmit() {
   console.log({ ...input.value })
   // add list via store
   store.addList({ ...input.value })
+
+  // reset form
+  Object.assign(input, ref({ ...defaultInput }))
 }
 
 
@@ -35,8 +41,8 @@ function onSubmit() {
 
 <!-- event modifier .enter, .prevent -->
 <form class="form" @submit.prevent="onSubmit">
-      <input class="input" v-model="input.name" type="text" name="name" placeholder="John" />
-      <input class="input" v-model="input.hobby" type="text" name="hobby" placeholder="Gaming" />
+      <BaseInput v-model="input.name" name="name" placeholder="John" />
+      <BaseInput v-model="input.hobby" name="hobby" placeholder="Gaming" />
       <button type="submit">Submit</button>
     </form>
 
