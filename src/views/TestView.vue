@@ -10,7 +10,8 @@ const store = useListStore()
 // initial input / default input
 const defaultInput = {
   name: '',
-  hobby: ''
+  hobby: '',
+  description: ''
 }
 
 // ref input
@@ -35,6 +36,7 @@ function onSubmit() {
 
 <h1>Test</h1>
 
+
 <!-- add v-model to integrate data binding with ref -->
 <!-- add event handler listener when keyup enter -->
 <!-- method handler with addList function -->
@@ -43,6 +45,7 @@ function onSubmit() {
 <form class="form" @submit.prevent="onSubmit">
       <BaseInput v-model="input.name" name="name" placeholder="John" />
       <BaseInput v-model="input.hobby" name="hobby" placeholder="Gaming" />
+      <BaseInput v-model="input.description" name="description" placeholder="Everyday" />
       <button type="submit">Submit</button>
     </form>
 
@@ -50,11 +53,15 @@ function onSubmit() {
 <ol class="list">
    <!-- (item, index) -->
    <template v-for="(item, index) in store.getList" :key="index">
-        <li class="underline">{{ item.name }} ({{ item.hobby }}) - {{ index }}</li>
+        <!-- null chaining (?.), nullish coalescing (??); ternary operator; not operator -->
+        <li class="underline">{{ item.name }} ({{ item.hobby }}) - {{ !!item?.description ?
+         item.description : 'description?' }}</li>
+
 
 </template>
 </ol>
   </div>
+</template>
 
 <!-- style default bersifat global -->
 <!-- scoped untuk melimitasi hanya di komponen -->
