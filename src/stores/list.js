@@ -5,10 +5,12 @@ export const useListStore = defineStore('list', () => {
   // state
   const list = reactive([
     {
-      name: 'First List'
+      name: 'Thataa',
+      hobby: 'Melukis'
     },
     {
-      name: 'Second List'
+      name: 'Lian',
+      hobby: 'Musik'
     }
   ])
 
@@ -18,7 +20,7 @@ export const useListStore = defineStore('list', () => {
   // action
   function addList(params) {
     if (params) {
-      list.push({ name: params })
+      list.push(params)
     }
   }
 
