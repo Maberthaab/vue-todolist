@@ -23,8 +23,10 @@ const nameInput = ref('')
 // }
 // arrow function
 const addList = (params) => {
-  list.push({ name: params })
-  nameInput.value = ''
+  if (params) {
+    list.push({ name: params })
+    nameInput.value = ''
+  }
 }
 
 </script>
@@ -36,7 +38,7 @@ const addList = (params) => {
   <!-- add event handler listener when keyup enter -->
   <!-- method handler with addList function -->
   <!-- event modifier .enter --> 
-  
+
   <input
     v-model="nameInput"
     type="text"
