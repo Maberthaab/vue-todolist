@@ -1,11 +1,12 @@
 <script setup>
-import { reactive, ref } from 'vue'
+import { ref } from 'vue'
+import { useListStore } from '@/stores/lists';
 // add reactive with ref
 // ref: buat bikin object khusus berisi reactive: { set, get }
 //  refImp;
 // reactive: buat bikin referensai langsung ke object nya
 //  proxy
-const list = reactive([
+/*const list = reactive([
 
   {
     name: 'First List'
@@ -13,7 +14,9 @@ const list = reactive([
   {
     name: 'Second List'
   }
-])
+])*/
+
+const store = useListStore();
 
 // ref input
 const nameInput = ref('')
@@ -22,12 +25,12 @@ const nameInput = ref('')
 //   list.push({ name: params })
 // }
 // arrow function
-const addList = (params) => {
+/*const addList = (params) => {
   if (params) {
     list.push({ name: params })
     nameInput.value = ''
   }
-}
+}*/
 
 </script>
 
@@ -43,7 +46,7 @@ const addList = (params) => {
     v-model="nameInput"
     type="text"
     name="name"
-    @keyup.enter="addList(nameInput)"
+    @keyup.enter="store.addList(nameInput); nameInput =''"
   />
 
   <ol>
