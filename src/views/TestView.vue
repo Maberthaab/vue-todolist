@@ -43,8 +43,8 @@ function onSubmit() {
 
 <!-- event modifier .enter, .prevent -->
 <form class="form" @submit.prevent="onSubmit">
-      <BaseInput v-model="input.name" name="name" placeholder="John" />
-      <BaseInput v-model="input.hobby" name="hobby" placeholder="Gaming" />
+      <BaseInput v-model="input.name" name="name" placeholder="Johan" required/>
+      <BaseInput v-model="input.hobby" name="hobby" placeholder="Tidur" required/>
       <BaseInput v-model="input.description" name="description" placeholder="Everyday" />
       <button type="submit">Submit</button>
     </form>
