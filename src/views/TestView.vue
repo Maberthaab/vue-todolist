@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 
 import { useListStore } from '@/stores/list'
 // components
@@ -9,9 +9,9 @@ import BaseInput from '@comp/BaseInput.vue'
 const store = useListStore()
 // initial input / default input
 const defaultInput = {
-  name: '',
-  hobby: '',
+  title: '',
   description: '',
+  category: '',
   completed: false
 }
 
@@ -27,7 +27,7 @@ const resetForm = () => {
 }
 
 // function yg menerima submit form
-function onSubmit() {
+async function onSubmit() {
   // event.preventDefault();
   const data =({ ...input.value })
   if (editing.value === false) {
@@ -35,7 +35,7 @@ function onSubmit() {
     store.addList(data)
   } else {
     // edit list
-    store.editList(editing.value, data)
+    await store.editList(editing.value, data)
   }
   // add list via store
   store.addList({ ...input.value })
@@ -50,15 +50,17 @@ function detailList(index) {
   editing.value = index
 }
 
-function toggleComplete(index) {
-  const detail = store.getDetail(index)
-  store.editList(index, {
+function toggleComplete(id) {
+  const detail = store.getDetail(id)
+  store.editList(id, {
     // pass all entries in detail object
     ...detail.value,
     // take completed value then toggle it
     completed: !detail.value.completed
   })
 }
+
+onMounted(async () => await store.initList())
 
 </script>
 
@@ -74,11 +76,11 @@ function toggleComplete(index) {
 
 <!-- event modifier .enter, .prevent -->
 <form class="form" @submit.prevent="onSubmit" @reset="resetForm">
-      <BaseInput v-model="input.name" name="name" placeholder="John" required />
-      <BaseInput v-model="input.hobby"  name="hobby" placeholder="Gaming" required />
+      <BaseInput v-model="input.title" name="title" placeholder="Tidur" required />
       <BaseInput v-model="input.description" name="description" placeholder="Everyday" />
+      <BaseInput v-model="input.category"  name="category" placeholder="Todolist" required />
       <div class="checkbox">
-        <input type="checkbox" v-model="input.completed" name="completed" > Completed
+        <input type="checkbox" v-model="input.completed" name="completed" /> Completed
       </div>
       <button type="reset">Cancel</button>
       <button type="submit">{{ editing !== false? 'Save' : 'Submit' }}</button>
@@ -89,16 +91,16 @@ function toggleComplete(index) {
    <!-- (item, index) -->
    <template v-for="(item, index) in store.getList" :key="index">
         <!-- null chaining (?.), nullish coalescing (??); ternary operator; not operator -->
-        <li :class="{ strike: item?.completed }" @dblclick="toggleComplete(index)">
-          <button class="red" @click="() => store.removeList(index)" :disabled="editing !== false">&times;</button>
+      
+        <li :class="{ strike: item?.completed }" @dblclick="toggleComplete(item.id)">
+          <button class="red" @click="() => store.removeList(item.id)" :disabled="editing !== false">&times;</button>
 
-          <button class="orange" @click="() => detailList(index)" :disabled="editing !== false">&#9998;</button>
-          {{ item?.name }} ({{ item?.hobby }}) -
-          {{ !!item?.description ? item.description : 'description?' }}
+          <button class="orange" @click="() => detailList(item.id)" :disabled="editing !== false">&#9998;</button>
+          {{ item?.title }} -
+          {{ !!item?.description ? item.description : '' }}
 
-          {{ item.name }} ({{ item.hobby }}) - {{ !!item?.description ? item.description : 'description?' }}
-        </li>
-
+        
+</li>
 </template>
 </ol>
   </div>
