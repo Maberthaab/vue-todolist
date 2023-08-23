@@ -1,10 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import { useAuthStore } from '@store/auth'
+import { d$auth } from '@store/auth'
 import HelloWorld from './components/HelloWorld.vue'
 import { computed } from 'vue';
-const auth = useAuthStore()
-const username = computed(() => auth.getUsername)
+const auth = d$auth()
+// set user from cookies
+auth.setUser()
+const username = computed(() => auth.g$user.id)
 </script>
 
 <template>
@@ -23,11 +25,12 @@ const username = computed(() => auth.getUsername)
           <RouterLink :to="{ name: 'Authenticated', params: { id: username ?? '' } }">
           Profile
         </RouterLink>
-        
+
           <!-- v-bind: add attribute binding to custom value -->
           <!-- programmatic navigation -->
           <RouterLink :to="{ name: 'test' }">Test</RouterLink>
-          <RouterLink to="404">404</RouterLink>
+           <!-- not found page -->
+           <RouterLink to="/404">404</RouterLink>
       </nav>
 
     </div>

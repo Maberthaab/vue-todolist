@@ -1,10 +1,7 @@
 <script setup>
 // komunikasi dari parent ke children; props
 defineProps({
-  id: {
-    type: String,
-    default: 'id'
-  },
+ 
   name: {
     type: String,
     default: 'name'
@@ -18,6 +15,12 @@ defineProps({
     default: ''
   },
 
+  type: {
+    type: String, // value type; ex: String, Boolean, Array
+    default: 'text', // default value
+    validator: (value) => ['text', 'password'].includes(value) // accepted value
+  },
+
   required: {
     type: Boolean,
     default: false
@@ -29,11 +32,11 @@ defineEmits(['update:modelValue'])
 
 
 <template>
-    <label :for="id">{{ name }}</label>
+    <label :for="name">{{ name }}</label>
   <input
-    :id="id"
+    :id="name"
     class="input"
-    type="text"
+    :type="type"
     :name="name"
     :placeholder="placeholder"
     :value="modelValue"
