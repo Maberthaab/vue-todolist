@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 
-import { useListStore } from '@/stores/lists'
+import { useListStore } from '@/stores/list'
 // components
 import BaseInput from '@comp/BaseInput.vue'
 
